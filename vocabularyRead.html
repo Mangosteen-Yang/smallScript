@@ -1,5 +1,8 @@
-<!-- 自定义单词库听写单词：把需要听写单词按行放入文本区域设置延迟（秒），点击play即可
-依赖：扇贝单词发音文件 -->
+<!-- 
+自定义单词库听写单词：把需要听写单词按行放入文本区域设置延迟（秒），点击play即可
+依赖：扇贝网单词发音
+author: yangshuo225@gmail.com
+-->
 <textarea id="TextBox1" style="height:200px; width:500px"></textarea><br>
 播放延迟<input type="text" value="3" id="delay"/>
 <button id="playButton">play</button>
@@ -17,7 +20,7 @@
 
         myAudio.preload = true;
         myAudio.controls = true;
-        myAudio.src = arr.shift();//每次读数组最后一个元素
+        myAudio.src = arr.shift();//每次读数组第一个元素
         myAudio.addEventListener('ended', playEndedHandler, false);
         setTimeout("myAudio.play()", delay);
         document.getElementById("audioBox").appendChild(myAudio);
