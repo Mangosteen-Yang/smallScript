@@ -1,0 +1,32 @@
+<!-- 自定义单词库听写单词：把需要听写单词按行放入文本区域设置延迟（秒），点击play即可
+依赖：扇贝单词发音文件 -->
+<textarea id="TextBox1" style="height:200px; width:500px"></textarea><br>
+播放延迟<input type="text" value="3" id="delay"/>
+<button id="playButton">play</button>
+<div id="audioBox"></div>
+<script type="text/javascript">
+    var myAudio = new Audio();
+    document.getElementById("playButton").onclick=function(){
+        var delay = document.getElementById("delay").value * 1000
+        var arr = []
+        var xxx = document.getElementById("TextBox1");
+        var yyy = xxx.value.split("\n");
+        for(var i = 0;i < yyy.length;i++){
+            arr.push('http://media.shanbay.com/audio/us/' + yyy[i] + '.mp3');
+        }
+
+        myAudio.preload = true;
+        myAudio.controls = true;
+        myAudio.src = arr.shift();//每次读数组最后一个元素
+        myAudio.addEventListener('ended', playEndedHandler, false);
+        setTimeout("myAudio.play()", delay);
+        document.getElementById("audioBox").appendChild(myAudio);
+        myAudio.loop = false;//禁止循环，否则无法触发ended事件
+        function playEndedHandler(){
+            myAudio.src = arr.shift();
+            setTimeout("myAudio.play()", delay);
+            console.log(arr.length);
+            !arr.length && myAudio.removeEventListener('ended',playEndedHandler,false);
+        }
+    }
+</script>
